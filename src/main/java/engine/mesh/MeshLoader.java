@@ -56,8 +56,23 @@ public class MeshLoader {
     public static Mesh createMesh(Vector3f[] positions, Vector3i[] indices, Vector3f[] colors, Vector2f[] textCords, Texture texture) {
         float[] newPositions = new float[positions.length * 3];
         int[] newIndices = new int[indices.length * 3];
+
         float[] newColors = new float[colors.length * 3];
         float[] newTextCords = new float[textCords.length * 2];
+
+        if(colors.length == 0) {
+            newColors = new float[3];
+
+            newColors[0] = 0;
+            newColors[1] = 0;
+            newColors[2] = 0;
+        }
+        if(textCords.length == 0) {
+            newTextCords = new float[2];
+
+            newTextCords[0] = 0;
+            newTextCords[1] = 0;
+        }
 
         for (int i = 0, x = 0; x < positions.length * 3; x += 3) {
             newPositions[x] = positions[i].x();

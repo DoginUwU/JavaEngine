@@ -48,6 +48,8 @@ public abstract class Object {
     private void UpdateMesh() {
         if(mesh == null) return;
 
+        boolean hasTexture = mesh.getTexture() != null;
+
         UpdatePosition();
         UpdateGraphs();
 
@@ -58,9 +60,13 @@ public abstract class Object {
         GL20.glEnableVertexAttribArray(2);
         GL20.glEnableVertexAttribArray(3);
 
-        if(mesh.getTexture() != null) {
+        shader.setUniform("useColour", hasTexture ? 0 : 1);
+
+        if(hasTexture) {
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, mesh.getTexture().getId());
+
+            shader.setUniform("texture_sampler", 0);
         }
 
         GL11.glDrawElements(GL11.GL_TRIANGLES, mesh.getVertexCount(), GL11.GL_UNSIGNED_INT,0);

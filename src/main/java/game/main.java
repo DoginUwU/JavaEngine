@@ -1,7 +1,6 @@
 package game;
 
 import engine.Engine;
-import engine.gamemanager.GameManager;
 import engine.shader.Shader;
 import org.joml.Vector3f;
 
@@ -9,7 +8,6 @@ public class main {
     public static void main(String[] args) {
         Engine engine = new Engine();
 
-        new Shader("triangle");
         new Shader("test");
 
         new Terrain();
@@ -24,6 +22,6 @@ public class main {
     }
 
     public static void Update() {
-        GameManager.GetShaderByName("test").setUniform("texture_sampler", 0);
+
     }
 }

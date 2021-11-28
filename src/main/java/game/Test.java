@@ -26,11 +26,7 @@ public class Test extends Object {
         uvs[3] = new Vector2f(0, 1);
 
         Texture texture = new Texture();
-        try {
-            texture.loadTexture("textures/test.jpg");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        texture.loadTexture("textures/test.jpg");
 
         for (int i = 0, x = 0; x <= resolution; x++) {
             for (int z = 0; z <= resolution; z++) {

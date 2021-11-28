@@ -8,7 +8,7 @@ import org.joml.Vector3i;
 
 public class Terrain extends Object {
     public Terrain() {
-        super("Terrain", "triangle");
+        super("Terrain", "test");
     }
 
     @Override

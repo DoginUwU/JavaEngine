@@ -13,7 +13,7 @@ import static org.lwjgl.stb.STBImage.*;
 public class Texture {
     private static int id;
 
-    public void loadTexture(String fileName) throws Exception {
+    public void loadTexture(String fileName) {
         int width;
         int height;
         ByteBuffer buf;

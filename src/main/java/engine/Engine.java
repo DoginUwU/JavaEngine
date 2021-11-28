@@ -63,8 +63,6 @@ public class Engine {
 
         camera.Update();
 
-        // shader.setUniform("texture_sampler", 0);
-
         for(Object object : objects) {
             object.Update();
             GL30.glUseProgram(0);
