@@ -11,7 +11,7 @@ public class main {
         new Shader("test");
 
         new Terrain();
-        new Test().transform.SetPosition(new Vector3f(10, 0, 10));
+        new Test().transform.SetPosition(new Vector3f(5, 0, 5));
 
         while (!engine.EngineShouldClose()) {
             Update();

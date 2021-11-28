@@ -12,6 +12,7 @@ public class Mesh {
         this.vertices = vertex;
         this.texture = texture;
     }
+
     public int getVaoID() {
         return vao;
     }

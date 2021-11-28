@@ -53,6 +53,7 @@ public class Test extends Object {
             }
         }
 
-        mesh = MeshLoader.createMesh(vertices, indices, new Vector3f[0], uvs, texture);
+        // mesh = MeshLoader.createMesh(vertices, indices, new Vector3f[0], uvs, texture);
+        mesh = MeshLoader.loadMesh("bunny.obj", null);
     }
 }
