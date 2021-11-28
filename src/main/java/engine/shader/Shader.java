@@ -3,6 +3,7 @@ package engine.shader;
 import engine.file.File;
 import engine.log.Log;
 import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.GL30;
 
 import java.nio.IntBuffer;
 
@@ -43,12 +44,16 @@ public class Shader {
         glDeleteShader(fragmentShaderId);
     }
 
+    public void Update() {
+        GL30.glUseProgram(programId);
+    }
+
     public void CheckShader(int shaderID) {
         IntBuffer result = BufferUtils.createIntBuffer(1);
         glGetShaderiv(shaderID, GL_COMPILE_STATUS, result);
 
         if(result.get() == GL_FALSE)
-            new Log(Log.LogEnum.ERROR, "Shader error", true);
+            new Log(Log.LogEnum.ERROR, "Shader " + shaderID + " error!", true);
     }
 
     public void CompileShaders(String shaderSource, int shaderID) {
@@ -57,6 +62,6 @@ public class Shader {
 
         CheckShader(shaderID);
 
-        new Log(Log.LogEnum.SUCCESS, "Shader loaded!", false);
+        new Log(Log.LogEnum.SUCCESS, "Shader " + shaderID + " loaded!", false);
     }
 }

@@ -16,7 +16,7 @@ import java.nio.FloatBuffer;
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
 import static org.lwjgl.opengl.GL20.*;
 
-public class Object {
+public abstract class Object {
     public String name;
     public Mesh mesh;
     public Transform transform = new Transform();
@@ -28,11 +28,11 @@ public class Object {
     }
 
     public void Start() {
-        DrawTriangles();
+        Draw();
     }
 
-    public void DrawTriangles() {
-        float[] vertices = {
+    public void Draw() {
+        /* float[] vertices = {
                 -1, -1, 0f,
                 1f, -1f, 0f,
                 -1f, 1f, 0f,
@@ -42,10 +42,14 @@ public class Object {
         int[] indices = { 0, 1, 2,
                           2, 1, 3 };
 
-        mesh = MeshLoader.createMesh(vertices, indices);
+        mesh = MeshLoader.createMesh(vertices, indices); */
     }
 
     public void Update() {
+        UpdateMesh();
+    }
+
+    private void UpdateMesh() {
         if(mesh == null) return;
 
         UpdatePosition();
@@ -65,8 +69,6 @@ public class Object {
     }
 
     private void UpdatePosition() {
-        Matrix4f viewProjection = Engine.camera.GetViewProjection();
-
         Matrix4f modelViewProjection = transform.GetViewProjection();
 
         int modelViewProjectionLoc = glGetUniformLocation(Engine.shader.programId, "ModelViewProjection");
