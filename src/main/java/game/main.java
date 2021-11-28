@@ -6,7 +6,7 @@ public class main {
     public static void main(String[] args) {
         Engine engine = new Engine();
 
-        Engine.objects.add(new Terrain());
+        new Terrain();
 
         while (!engine.EngineShouldClose()) {
             engine.Update();

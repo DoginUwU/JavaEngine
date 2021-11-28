@@ -54,6 +54,8 @@ public class Engine {
 
         shader = new Shader("triangle_vert.glsl", "triangle_frag.glsl");
         deltaTime = new DeltaTime();
+
+        glEnable(GL_DEPTH_TEST);
     }
 
     public void Update() {
