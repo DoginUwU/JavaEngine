@@ -28,7 +28,6 @@ public class Engine {
 
     // temp
     public static Camera camera = new Camera();
-    public static Shader shader;
 
     public Engine () {
         Start();
@@ -52,7 +51,6 @@ public class Engine {
 
         camera.setPosition(0, 1, 5);
 
-        shader = new Shader("triangle_vert.glsl", "triangle_frag.glsl");
         deltaTime = new DeltaTime();
 
         glEnable(GL_DEPTH_TEST);
@@ -65,8 +63,9 @@ public class Engine {
 
         camera.Update();
 
+        // shader.setUniform("texture_sampler", 0);
+
         for(Object object : objects) {
-            shader.Update();
             object.Update();
             GL30.glUseProgram(0);
         }

@@ -1,6 +1,7 @@
 package engine.mesh;
 
 import engine.log.Log;
+import engine.texture.Texture;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector3i;
@@ -52,10 +53,11 @@ public class MeshLoader {
         GL15.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW);
     }
 
-    public static Mesh createMesh(Vector3f[] positions, Vector3i[] indices, Vector3f[] colors) {
+    public static Mesh createMesh(Vector3f[] positions, Vector3i[] indices, Vector3f[] colors, Vector2f[] textCords, Texture texture) {
         float[] newPositions = new float[positions.length * 3];
         int[] newIndices = new int[indices.length * 3];
         float[] newColors = new float[colors.length * 3];
+        float[] newTextCords = new float[textCords.length * 2];
 
         for (int i = 0, x = 0; x < positions.length * 3; x += 3) {
             newPositions[x] = positions[i].x();
@@ -71,6 +73,12 @@ public class MeshLoader {
             i++;
         }
 
+        for (int i = 0, x = 0; x < textCords.length * 2; x += 2) {
+            newTextCords[x] = textCords[i].x();
+            newTextCords[x + 1] = textCords[i].y();
+            i++;
+        }
+
         for (int i = 0, x = 0; x < indices.length * 3; x += 3) {
             newIndices[x] = indices[i].x();
             newIndices[x + 1] = indices[i].y();
@@ -79,11 +87,14 @@ public class MeshLoader {
         }
 
         int vao = genVAO();
+
         storeData(0,3, newPositions);
         storeData(1,3, newColors);
+        storeData(2,2, newTextCords);
+
         bindIndices(newIndices);
         GL30.glBindVertexArray(0);
-        return new Mesh(vao, newIndices.length);
+        return new Mesh(vao, newIndices.length, texture);
     }
 
     private static int genVAO() {
