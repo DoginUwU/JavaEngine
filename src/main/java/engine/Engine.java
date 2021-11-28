@@ -50,7 +50,7 @@ public class Engine {
         GL.createCapabilities();
         glClearColor(0.5f, 0.79f, 1, 1);
 
-        camera.setPosition(0, 0, 5);
+        camera.setPosition(0, 1, 5);
 
         shader = new Shader("triangle_vert.glsl", "triangle_frag.glsl");
         deltaTime = new DeltaTime();

@@ -53,6 +53,7 @@ public abstract class Object {
         if(mesh == null) return;
 
         UpdatePosition();
+        UpdateGraphs();
 
         GL30.glBindVertexArray(mesh.getVaoID());
 
@@ -66,6 +67,10 @@ public abstract class Object {
 
         GL20.glDisableVertexAttribArray(0);
         GL30.glBindVertexArray(0);
+    }
+
+    protected void UpdateGraphs() {
+
     }
 
     private void UpdatePosition() {

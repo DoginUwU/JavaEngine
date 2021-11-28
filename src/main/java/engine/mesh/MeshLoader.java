@@ -1,5 +1,8 @@
 package engine.mesh;
 
+import engine.log.Log;
+import org.joml.Vector3f;
+import org.joml.Vector3i;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
@@ -9,6 +12,7 @@ import org.lwjgl.opengl.GL30;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MeshLoader {
@@ -47,12 +51,29 @@ public class MeshLoader {
         GL15.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW);
     }
 
-    public static Mesh createMesh(float[] positions, int[] indices) {
+    public static Mesh createMesh(Vector3f[] positions, Vector3i[] indices) {
+        float[] newPositions = new float[positions.length * 3];
+        int[] newIndices = new int[indices.length * 3];
+
+        for (int i = 0, x = 0; x < positions.length * 3; x += 3) {
+            newPositions[x] = positions[i].x();
+            newPositions[x + 1] = positions[i].y();
+            newPositions[x + 2] = positions[i].z();
+            i++;
+        }
+
+        for (int i = 0, x = 0; x < indices.length * 3; x += 3) {
+            newIndices[x] = indices[i].x();
+            newIndices[x + 1] = indices[i].y();
+            newIndices[x + 2] = indices[i].z();
+            i++;
+        }
+
         int vao = genVAO();
-        storeData(0,3,positions);
-        bindIndices(indices);
+        storeData(0,3, newPositions);
+        bindIndices(newIndices);
         GL30.glBindVertexArray(0);
-        return new Mesh(vao, indices.length);
+        return new Mesh(vao, newIndices.length);
     }
 
     private static int genVAO() {
