@@ -27,7 +27,7 @@ public abstract class Object {
         if(shader == null)
             new Log(Log.LogEnum.ERROR, "Shader not founded!", true);
 
-        Engine.objects.add(this);
+        GameManager.objects.add(this);
 
         Start();
     }

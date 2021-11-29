@@ -1,47 +1,31 @@
 package engine;
 
 import engine.camera.Camera;
-import engine.camera.FlyCamera;
+import engine.gamemanager.GameManager;
 import engine.log.Log;
 import engine.object.Object;
-import engine.shader.Shader;
 import engine.time.DeltaTime;
 import engine.window.Window;
-import org.lwjgl.*;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL30;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
 public class Engine {
     public static int Width = 800, Height = 600;
+    public static DeltaTime deltaTime = new DeltaTime();
 
-    public static Window window;
-    public static List<Object> objects = new ArrayList<Object>();
-    public static DeltaTime deltaTime;
-
-    public static Engine instance;
-
-    // temp
-    public static Camera camera = new Camera();
+    // Empty
+    public static Window window = null;
+    public static Camera camera = null;
 
     public Engine () {
-        Start();
+        if (!glfwInit())
+            new Log(Log.LogEnum.ERROR, "Unable to initialize GLFW", true);
     }
 
     public void Start() {
-        instance = this;
-
-        new Log(Log.LogEnum.LOG, "LWJGL " + Version.getVersion(), false);
-
-        if (!glfwInit())
-            new Log(Log.LogEnum.ERROR, "Unable to initialize GLFW", true);
-
-        window = new Window("Engine");
+        if(window == null || camera == null) return;
 
         glfwMakeContextCurrent(window.GetWindow());
         glfwSwapInterval(1);
@@ -49,11 +33,11 @@ public class Engine {
         GL.createCapabilities();
         glClearColor(0.5f, 0.79f, 1, 1);
 
-        camera.setPosition(0, 1, 5);
-
-        deltaTime = new DeltaTime();
-
+        glEnable(GL_CULL_FACE);
         glEnable(GL_DEPTH_TEST);
+
+        glCullFace(GL_BACK);
+        glDepthFunc(GL_LESS);
     }
 
     public void Update() {
@@ -63,7 +47,7 @@ public class Engine {
 
         camera.Update();
 
-        for(Object object : objects) {
+        for(Object object : GameManager.objects) {
             object.Update();
             GL30.glUseProgram(0);
         }
@@ -75,12 +59,13 @@ public class Engine {
         glfwPollEvents();
     }
 
-    public void Exit() {
-        window.Destroy();
-        glfwTerminate();
-    }
-
     public boolean EngineShouldClose() {
         return window.ShouldClose();
+    }
+
+    public void Exit() {
+        window.Destroy();
+
+        glfwTerminate();
     }
 }
