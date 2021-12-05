@@ -14,6 +14,6 @@ public class Test extends Object {
         Texture texture = new Texture();
         texture.loadTexture("textures/test.jpg");
 
-        mesh = MeshLoader.loadMesh("test.obj", texture);
+        mesh = MeshLoader.loadMesh("bunny.obj", texture);
     }
 }

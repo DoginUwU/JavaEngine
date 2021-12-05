@@ -54,12 +54,14 @@ public class MeshLoader {
         GL15.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW);
     }
 
-    public static Mesh createMesh(Vector3f[] positions, Vector3i[] indices, Vector3f[] colors, Vector2f[] textCords, Texture texture) {
+    public static Mesh createMesh(Vector3f[] positions, Vector3f[] normals, Vector3i[] indices, Vector3f[] colors, Vector2f[] textCords, Texture texture) {
         float[] newPositions = new float[positions.length * 3];
         int[] newIndices = new int[indices.length * 3];
 
         float[] newColors = new float[colors.length * 3];
         float[] newTextCords = new float[textCords.length * 2];
+
+        float[] newNormals = new float[normals.length * 3];
 
         if(colors.length == 0) {
             newColors = new float[3];
@@ -79,6 +81,13 @@ public class MeshLoader {
             newPositions[x] = positions[i].x();
             newPositions[x + 1] = positions[i].y();
             newPositions[x + 2] = positions[i].z();
+            i++;
+        }
+
+        for (int i = 0, x = 0; x < normals.length * 3; x += 3) {
+            newNormals[x] = normals[i].x();
+            newNormals[x + 1] = normals[i].y();
+            newNormals[x + 2] = normals[i].z();
             i++;
         }
 
@@ -109,9 +118,11 @@ public class MeshLoader {
         storeData(0,3, newPositions);
         storeData(1,3, newColors);
         storeData(2,2, newTextCords);
+        storeData(3,3, newNormals);
 
         bindIndices(newIndices);
         GL30.glBindVertexArray(0);
+
         return new Mesh(vao, newIndices.length, texture);
     }
 
@@ -173,7 +184,7 @@ public class MeshLoader {
             i++;
         }
         Vector2f[] textCoordArr = new Vector2f[posList.size()];
-        float[] normArr = new float[posList.size() * 3];
+        Vector3f[] normArr = new Vector3f[posList.size()];
 
         for (Face face : facesList) {
             IdxGroup[] faceVertexIndices = face.getFaceVertexIndices();
@@ -189,13 +200,13 @@ public class MeshLoader {
             indice += 3;
         }
 
-        Mesh mesh = createMesh(posArr, indicesArr, new Vector3f[0], textCoordArr, texture);
+        Mesh mesh = createMesh(posArr, normArr, indicesArr, new Vector3f[0], textCoordArr, texture);
         return mesh;
     }
 
     private static void processFaceVertex(IdxGroup indices, List<Vector2f> textCoordList,
                                           List<Vector3f> normList, List<Integer> indicesList,
-                                          Vector2f[] texCoordArr, float[] normArr) {
+                                          Vector2f[] texCoordArr, Vector3f[] normArr) {
 
         // Set index for vertex coordinates
         int posIndex = indices.idxPos;
@@ -209,9 +220,7 @@ public class MeshLoader {
         if (indices.idxVecNormal >= 0) {
             // Reorder normal vectors
             Vector3f vecNorm = normList.get(indices.idxVecNormal);
-            normArr[posIndex * 3] = vecNorm.x;
-            normArr[posIndex * 3 + 1] = vecNorm.y;
-            normArr[posIndex * 3 + 2] = vecNorm.z;
+            normArr[posIndex] = new Vector3f(vecNorm.x, vecNorm.y, vecNorm.z);
         }
     }
 

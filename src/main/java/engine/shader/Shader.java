@@ -1,10 +1,16 @@
 package engine.shader;
 
+import engine.Engine;
 import engine.file.File;
 import engine.gamemanager.GameManager;
+import engine.light.Light;
 import engine.log.Log;
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
+import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL30;
+import org.lwjgl.system.MemoryStack;
 
 import java.nio.IntBuffer;
 
@@ -87,5 +93,24 @@ public class Shader {
     public void setUniform(String uniformName, float value) {
         int location = glGetUniformLocation(programId, uniformName);
         glUniform1f(location, value);
+    }
+
+    public void setUniform(String uniformName, Vector3f value) {
+        try (MemoryStack stack = MemoryStack.stackPush()) {
+            int location = glGetUniformLocation(programId, uniformName);
+            glUniform3fv(location, value.get(stack.mallocFloat(3)));
+        }
+    }
+
+    public void setUniform(String uniformName, Matrix4f value) {
+        try (MemoryStack stack = MemoryStack.stackPush()) {
+            int location = glGetUniformLocation(programId, uniformName);
+            glUniformMatrix4fv(location, false, value.get(stack.mallocFloat(16)));
+        }
+    }
+
+    public void setUniform(String uniformName, Light light) {
+        setUniform(uniformName + "_direction", light.direction.x);
+        setUniform(uniformName + "_intensity", light.intensity);
     }
 }

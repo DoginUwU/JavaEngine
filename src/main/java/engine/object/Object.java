@@ -69,6 +69,11 @@ public abstract class Object {
             shader.setUniform("texture_sampler", 0);
         }
 
+        Matrix4f normalMatrix = new Matrix4f().invert(new Matrix4f().transpose(Engine.camera.GetView().mul(transform.GetMatrix())));
+
+        shader.setUniform("NormalMatrix", normalMatrix);
+        shader.setUniform("light", Engine.light);
+
         GL11.glDrawElements(GL11.GL_TRIANGLES, mesh.getVertexCount(), GL11.GL_UNSIGNED_INT,0);
 
         GL20.glDisableVertexAttribArray(0);
@@ -82,9 +87,6 @@ public abstract class Object {
     private void UpdatePosition() {
         Matrix4f modelViewProjection = transform.GetViewProjection();
 
-        int modelViewProjectionLoc = glGetUniformLocation(shader.programId, "ModelViewProjection");
-        try (MemoryStack stack = MemoryStack.stackPush()) {
-            glUniformMatrix4fv(modelViewProjectionLoc, false, modelViewProjection.get(stack.mallocFloat(16)));
-        }
+        shader.setUniform("ModelViewProjection", modelViewProjection);
     }
 }

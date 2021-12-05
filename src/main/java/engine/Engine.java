@@ -2,6 +2,7 @@ package engine;
 
 import engine.camera.Camera;
 import engine.gamemanager.GameManager;
+import engine.light.Light;
 import engine.log.Log;
 import engine.object.Object;
 import engine.time.DeltaTime;
@@ -18,6 +19,9 @@ public class Engine {
     // Empty
     public static Window window = null;
     public static Camera camera = null;
+
+    // Temp
+    public static Light light = new Light();
 
     public Engine () {
         if (!glfwInit())
