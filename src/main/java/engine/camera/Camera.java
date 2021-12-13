@@ -19,7 +19,7 @@ public class Camera {
     private final Vector3f rotation;
 
     float fieldOfView = Math.toRadians(45f);
-    float aspectRatio = Engine.Width / Engine.Height;
+    public float aspectRatio = Engine.Width / Engine.Height;
     float near = 0.1f;
     float far = 1000.0f;
 

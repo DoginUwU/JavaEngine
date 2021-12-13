@@ -29,7 +29,7 @@ public class Engine {
     }
 
     public void Start() {
-        if(window == null || camera == null) return;
+        if(window == null || camera == null) new Log(Log.LogEnum.ERROR, "Unable to find window or camera component", true);
 
         glfwMakeContextCurrent(window.GetWindow());
         glfwSwapInterval(1);
@@ -42,6 +42,16 @@ public class Engine {
 
         glCullFace(GL_BACK);
         glDepthFunc(GL_LESS);
+
+        window.OnWindowResize((Window.WindowInfo info) -> {
+            int width =  window.GetDimensions()[0];
+            int height =  window.GetDimensions()[1];
+
+            camera.aspectRatio = width / height;
+            glViewport(0, 0, width, height);
+
+            return info;
+        });
     }
 
     public void Update() {

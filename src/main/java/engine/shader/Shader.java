@@ -1,13 +1,11 @@
 package engine.shader;
 
-import engine.Engine;
 import engine.file.File;
 import engine.gamemanager.GameManager;
 import engine.light.Light;
 import engine.log.Log;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
-import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.system.MemoryStack;
