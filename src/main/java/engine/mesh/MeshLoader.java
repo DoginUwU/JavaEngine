@@ -1,7 +1,6 @@
 package engine.mesh;
 
 import engine.file.File;
-import engine.log.Log;
 import engine.texture.Texture;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -15,7 +14,6 @@ import org.lwjgl.opengl.GL30;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class MeshLoader {

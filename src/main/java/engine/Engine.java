@@ -12,6 +12,8 @@ import org.lwjgl.opengl.GL30;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
+import org.joml.Vector3f;
+
 public class Engine {
     public static int Width = 800, Height = 600;
     public static DeltaTime deltaTime = new DeltaTime();
@@ -21,7 +23,7 @@ public class Engine {
     public static Camera camera = null;
 
     // Temp
-    public static Light light = new Light();
+    public static Light light = new Light(new Vector3f(1, 1, 1), new Vector3f(1, 1, 1));
 
     public Engine () {
         if (!glfwInit())
@@ -42,6 +44,8 @@ public class Engine {
 
         glCullFace(GL_BACK);
         glDepthFunc(GL_LESS);
+
+        camera.setPosition(10, 2, 10);
 
         window.OnWindowResize((Window.WindowInfo info) -> {
             int width =  window.GetDimensions()[0];

@@ -8,34 +8,28 @@ uniform sampler2D texture_sampler;
 uniform int useColour;
 
 // light
-uniform vec3 light_direction;
-uniform float light_intensity;
+uniform vec3 light_position;
+uniform vec3 light_color;
+uniform vec3 light_ambient;
 
 out vec4 OutColor;
 
 float CalcDirectionalLightFactor(vec3 lightDirection, vec3 normal) {
-    float DiffuseFactor = dot(normalize(normal), -lightDirection);
-
-    if (DiffuseFactor > 0) {
-        return DiffuseFactor;
-    }
-    else {
-        return 0.0;
-    }
+    float factor = dot(normal, lightDirection);
+    return max(factor, 0.0);
 }
 
 void main() {
-    vec3 InitialColor = vec3(0, 0, 0);
-
-    vec3 Normal = normalize(OutVertexNormal);
-
-    if(useColour == 1) {
-        InitialColor = Color;
+    vec3 normal = normalize(OutVertexNormal);
+    vec3 lightDirection = normalize(light_position);
+    float diffuseFactor = CalcDirectionalLightFactor(lightDirection, normal);
+    vec3 diffuseColor = diffuseFactor * light_color;
+    vec3 ambientColor = light_ambient;
+    vec3 color = diffuseColor * ambientColor;
+    if (useColour == 1) {
+        color = Color * color;
     } else {
-        InitialColor = texture(texture_sampler, OutTexCord).rgb;
+        color = texture(texture_sampler, OutTexCord).rgb * color;
     }
-
-    vec3 FinalColor = InitialColor * light_intensity;
-
-    OutColor = vec4(FinalColor, 1);
+    OutColor = vec4(color, 1.0);
 }

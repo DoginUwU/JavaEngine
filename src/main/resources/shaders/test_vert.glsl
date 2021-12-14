@@ -15,7 +15,6 @@ out vec3 OutVertexNormal;
 void main() {
     OutTexCord = TexCord;
     Color = InColor;
-    OutVertexNormal = vec3(NormalMatrix * vec4(VertexNormal, 0));
-
+    OutVertexNormal = vec3(NormalMatrix * vec4(VertexNormal, 0.0));
     gl_Position = ModelViewProjection * vec4(InPosition, 1.0);
 }

@@ -6,8 +6,6 @@ import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector3i;
 
-import java.util.Arrays;
-
 public class Terrain extends Object {
     public Terrain() {
         super("Terrain", "test");
@@ -15,7 +13,7 @@ public class Terrain extends Object {
 
     @Override
     public void Draw() {
-        int resolution = 10;
+        int resolution = 50;
 
         Vector3f[] vertices = new Vector3f[(resolution + 1) * (resolution + 1)];
         Vector3i[] indices = new Vector3i[resolution * resolution * 2];

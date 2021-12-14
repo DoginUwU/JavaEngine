@@ -10,7 +10,6 @@ import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
-import org.lwjgl.system.MemoryStack;
 
 import static org.lwjgl.opengl.GL20.*;
 

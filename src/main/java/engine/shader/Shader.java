@@ -108,7 +108,8 @@ public class Shader {
     }
 
     public void setUniform(String uniformName, Light light) {
-        setUniform(uniformName + "_direction", light.direction.x);
-        setUniform(uniformName + "_intensity", light.intensity);
+        setUniform(uniformName + "_position", light.getPosition());
+        setUniform(uniformName + "_color", light.getColor());
+        setUniform(uniformName + "_ambient", light.getAttenuation());
     }
 }

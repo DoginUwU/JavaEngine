@@ -1,6 +1,5 @@
 package engine.file;
 
-import engine.log.Log;
 import org.apache.commons.io.IOUtils;
 
 import java.io.BufferedReader;

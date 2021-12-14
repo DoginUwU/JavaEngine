@@ -6,7 +6,7 @@ import engine.shader.Shader;
 import engine.window.Window;
 import org.joml.Vector3f;
 
-public class main {
+public class Main {
     public static void main(String[] args) {
         Engine engine = new Engine();
 
@@ -27,7 +27,7 @@ public class main {
     public static void Start() {
         new Shader("test");
         new Terrain();
-        new Test().transform.SetPosition(new Vector3f(5, 1, 5));
+        new Test().transform.SetPosition(new Vector3f(5, 5, 5));
     }
 
     public static void Update() {

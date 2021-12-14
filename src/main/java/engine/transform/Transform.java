@@ -1,7 +1,6 @@
 package engine.transform;
 
 import engine.Engine;
-import engine.log.Log;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
@@ -16,6 +15,10 @@ public class Transform {
         Matrix4f viewProjection = Engine.camera.GetViewProjection();
 
         return viewProjection.mul(GetMatrix());
+    }
+
+    public Vector3f GetPosition() {
+        return new Vector3f(modelMatrix.m30(), modelMatrix.m31(), modelMatrix.m32());
     }
 
     public void SetPosition(Vector3f pos) {

@@ -1,14 +1,5 @@
 package engine.camera;
 
-import engine.Engine;
-import engine.input.Input;
-import engine.log.Log;
-import org.joml.Math;
-import org.joml.Matrix4f;
-import org.joml.Vector3f;
-
-import static org.lwjgl.glfw.GLFW.*;
-
 public class FlyCamera {
     /* Vector3f location = new Vector3f( 0, 0, 5 );
     Vector3f direction = new Vector3f( 0, 0, 1 );

@@ -2,7 +2,6 @@ package engine.camera;
 
 import engine.Engine;
 import engine.input.Input;
-import engine.log.Log;
 import org.joml.*;
 import org.joml.Math;
 import org.lwjgl.BufferUtils;
